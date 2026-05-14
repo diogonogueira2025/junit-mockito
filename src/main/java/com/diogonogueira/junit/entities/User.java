@@ -1,9 +1,8 @@
 package com.diogonogueira.junit.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,18 +12,22 @@ import java.util.UUID;
 @Table(name = "tb_user")
 public class User implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
+    @Email
     private String email;
 
     public User() {}
 
-    public User(UUID id, String name, String email) {
-        this.id = id;
+    public User(String name, String email) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.email = email;
     }

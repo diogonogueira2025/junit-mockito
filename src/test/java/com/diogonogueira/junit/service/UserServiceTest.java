@@ -2,9 +2,7 @@ package com.diogonogueira.junit.service;
 
 import com.diogonogueira.junit.entities.User;
 import com.diogonogueira.junit.repositories.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,7 +25,7 @@ public class UserServiceTest {
 
     @Test
     void shouldReturnUserWhenUserExists() {
-        User user = new User(UUID.randomUUID(), "Diogo", "diogo@gmail.com");
+        User user = new User("Diogo", "diogo@gmail.com");
 
         when(userRepository.findById(user.getId()))
                 .thenReturn(Optional.of(user));
@@ -52,7 +50,7 @@ public class UserServiceTest {
 
     @Test
     void shouldCreateUserWhenEmailDoesNotExist() {
-        User user = new User(UUID.randomUUID(), "Diogo", "diogo@gmail.com");
+        User user = new User("Diogo", "diogo@gmail.com");
 
         when(userRepository.existsByEmail(user.getEmail()))
                 .thenReturn(false);
@@ -69,7 +67,7 @@ public class UserServiceTest {
 
     @Test
     void shouldThrowExceptionWhenEmailAlreadyExists() {
-        User user = new User(UUID.randomUUID(), "Diogo", "diogo@gmail.com");
+        User user = new User("Diogo", "diogo@gmail.com");
 
         when(userRepository.existsByEmail(user.getEmail()))
                 .thenReturn(true);
